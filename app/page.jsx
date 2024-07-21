@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import Todo from "@/Components/Todo";
+import axios from "axios";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -11,38 +11,42 @@ export default function Home() {
     description: "",
   });
 
-const onChangeHandler = (e) => {
-const name = e.target.name;
-const value = e.target.value;
-setFormData(form => ({...form,[name]:value}));
-console.log(formData)
-}
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData((form) => ({ ...form, [name]: value }));
+    console.log(formData);
+  };
 
-const onSubmitHandler = async (e) => {
-  e.preventDefault();
-  try {
-    
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api", formData);
 
-
-    toast.success('Task was added')
-  } catch (error) {
-    toast.error("Error")
-  }
-
-}
-
+      toast.success(response.data.msg);
+    } catch (error) {
+      toast.error("Error");
+    }
+  };
 
   return (
     <>
-    <ToastContainer theme="dark"/>
-      <form onSubmit={onSubmitHandler} className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto">
-        <input value={formData.title} onChange={onChangeHandler}
+      <ToastContainer theme="dark" />
+      <form
+        onSubmit={onSubmitHandler}
+        className="flex items-start flex-col gap-2 w-[80%] max-w-[600px] mt-24 px-2 mx-auto"
+      >
+        <input
+          value={formData.title}
+          onChange={onChangeHandler}
           type="text"
           name="title"
           placeholder=" Enter Title"
           className="px-3 py-2 border-2 w-full"
         />
-        <textarea value={formData.description} onChange={onChangeHandler}
+        <textarea
+          value={formData.description}
+          onChange={onChangeHandler}
           name="description"
           placeholder=" Enter Description"
           className="px-3 py-2 border-2 w-full"
