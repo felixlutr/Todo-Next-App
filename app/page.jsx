@@ -61,7 +61,7 @@ export default function Home() {
           <thead className="text-xs text-black uppercase bg-gray-400  dark:text-black">
             <tr>
               <th scope="col" className="px-6 py-3">
-                ID
+                IDD
               </th>
               <th scope="col" className="px-6 py-3">
                 Title
